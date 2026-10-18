@@ -668,7 +668,7 @@
   </section>
 
   <!-- ========================================================= -->
-  <!-- 2. THIỆP CƯỚI CHÍNH (TỪ TỐN NỔI LÊN DƯỚI ARTWORK KHI XONG) -->
+  <!-- 2. THIỆP CƯỚI CHÍNH (CẤU TRÚC RESPONSIVE HOÀN THIỆN) -->
   <!-- ========================================================= -->
   <main class="w-full max-w-4xl mx-auto px-3 sm:px-6 pb-12 sm:pb-16">
     <section id="invitation-section" class="w-full max-w-lg sm:max-w-xl mx-auto">
@@ -681,35 +681,66 @@
           </svg>
         </div>
 
-        <!-- Gia đình hai bên -->
-        <div class="grid grid-cols-2 gap-2 sm:gap-6 max-w-md mx-auto text-center">
-          <div class="space-y-1.5 sm:space-y-2">
-            <p class="text-[10px] sm:text-xs tracking-[0.2em] uppercase font-sans font-bold text-wine">
-              NHÀ TRAI
-            </p>
-            <div class="space-y-0.5 leading-tight sm:leading-[1.35]">
-              <p class="font-serif text-[12px] sm:text-[14px] md:text-[15px] font-bold text-wine tracking-normal sm:tracking-wide whitespace-nowrap">
-                ÔNG NGUYỄN ĐĂNG TRÚC
-              </p>
-              <p class="font-serif text-[12px] sm:text-[14px] md:text-[15px] font-bold text-wine tracking-normal sm:tracking-wide whitespace-nowrap">
-                BÀ CUNG THỊ CẨM VÂN
-              </p>
+        <!-- Gia đình hai bên (Tách dòng Ông/Tên Bà/Tên trên Mobile tránh va chạm) -->
+        <div class="grid grid-cols-2 gap-3 sm:gap-6 max-w-md mx-auto text-center">
+          
+        <div class="space-y-1.5 sm:space-y-2">
+          <p class="text-[10px] sm:text-xs tracking-[0.2em] uppercase font-sans font-bold text-wine">
+            NHÀ TRAI
+          </p>
+
+          <!-- Khi màn hình hẹp / Mobile: Tách thành Ông / Tên / Bà / Tên chuẩn theo yêu cầu -->
+          <div class="sm:hidden space-y-1.5 text-center leading-tight">
+            <div>
+              <p class="text-[10px] tracking-wider uppercase font-sans font-semibold text-wine/75">Ông</p>
+              <p class="font-serif text-[13px] font-bold text-wine tracking-wide whitespace-nowrap">Nguyễn Đăng Trúc</p>
+            </div>
+            <div>
+              <p class="text-[10px] tracking-wider uppercase font-sans font-semibold text-wine/75">Bà</p>
+              <p class="font-serif text-[13px] font-bold text-wine tracking-wide whitespace-nowrap">Cung Thị Cẩm Vân</p>
             </div>
           </div>
 
-          <div class="space-y-1.5 sm:space-y-2">
-            <p class="text-[10px] sm:text-xs tracking-[0.2em] uppercase font-sans font-bold text-wine">
-              NHÀ GÁI
+          <!-- Khi màn hình rộng / Desktop: Giữ trên 1 dòng đơn thanh lịch -->
+          <div class="hidden sm:block space-y-0.5 leading-[1.35]">
+            <p class="font-serif text-[14px] md:text-[15px] font-bold text-wine tracking-wide whitespace-nowrap">
+              ÔNG NGUYỄN ĐĂNG TRÚC
             </p>
-            <div class="space-y-0.5 leading-tight sm:leading-[1.35]">
-              <p class="font-serif text-[12px] sm:text-[14px] md:text-[15px] font-bold text-wine tracking-normal sm:tracking-wide whitespace-nowrap">
-                ÔNG NGUYỄN VIẾT TRƯỜNG
-              </p>
-              <p class="font-serif text-[12px] sm:text-[14px] md:text-[15px] font-bold text-wine tracking-normal sm:tracking-wide whitespace-nowrap">
-                BÀ HOÀNG THỊ MAI
-              </p>
+            <p class="font-serif text-[14px] md:text-[15px] font-bold text-wine tracking-wide whitespace-nowrap">
+              BÀ CUNG THỊ CẨM VÂN
+            </p>
+          </div>
+        </div>
+    
+          
+        <div class="space-y-1.5 sm:space-y-2">
+          <p class="text-[10px] sm:text-xs tracking-[0.2em] uppercase font-sans font-bold text-wine">
+            NHÀ GÁI
+          </p>
+
+          <!-- Khi màn hình hẹp / Mobile: Tách thành Ông / Tên / Bà / Tên chuẩn theo yêu cầu -->
+          <div class="sm:hidden space-y-1.5 text-center leading-tight">
+            <div>
+              <p class="text-[10px] tracking-wider uppercase font-sans font-semibold text-wine/75">Ông</p>
+              <p class="font-serif text-[13px] font-bold text-wine tracking-wide whitespace-nowrap">Nguyễn Viết Trường</p>
+            </div>
+            <div>
+              <p class="text-[10px] tracking-wider uppercase font-sans font-semibold text-wine/75">Bà</p>
+              <p class="font-serif text-[13px] font-bold text-wine tracking-wide whitespace-nowrap">Hoàng Thị Mai</p>
             </div>
           </div>
+
+          <!-- Khi màn hình rộng / Desktop: Giữ trên 1 dòng đơn thanh lịch -->
+          <div class="hidden sm:block space-y-0.5 leading-[1.35]">
+            <p class="font-serif text-[14px] md:text-[15px] font-bold text-wine tracking-wide whitespace-nowrap">
+              ÔNG NGUYỄN VIẾT TRƯỜNG
+            </p>
+            <p class="font-serif text-[14px] md:text-[15px] font-bold text-wine tracking-wide whitespace-nowrap">
+              BÀ HOÀNG THỊ MAI
+            </p>
+          </div>
+        </div>
+    
         </div>
 
         <!-- Hoa văn phân cách nguyên bản -->
