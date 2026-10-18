@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="vi" class="scroll-smooth">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Thiệp Cưới | Hoàng Dương &amp; Quốc Dũng</title>
+
   <!-- Disable browser caching -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Thiệp Cưới | Hoàng Dương &amp; Quốc Dũng</title>
+
   <!-- Favicon: DD Monogram -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="alternate icon" type="image/png" href="favicon.png">
@@ -28,7 +30,6 @@
   <meta name="twitter:description" content="Trân trọng kính mời quý khách đến dự buổi tiệc chung vui Lễ Thành Hôn ngày 28.11.2026">
   <meta name="twitter:image" content="https://versalito.github.io/thiep-cuoi-duong-dung/preview.jpg">
 
-  
   <!-- Classic Editorial Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -886,6 +887,11 @@
           <p class="font-serif italic font-semibold text-xs sm:text-[13.5px] text-wine">
             (nhằm ngày 20 tháng 10 năm Bính Ngọ)
           </p>
+
+          <!-- DÒNG ĐỊA CHỈ HÔN LỄ ĐƯỢC THÊM CHUẨN XÁC DƯỚI ĐOẠN HÔN LỄ CỬ HÀNH -->
+          <p class="font-sans text-xs sm:text-[13px] md:text-[13.5px] font-bold text-wine tracking-normal max-w-sm mx-auto leading-normal pt-1">
+            SỐ 27, NGÁCH 39/250 KIM GIANG, PHƯỜNG ĐỊNH CÔNG, HÀ NỘI
+          </p>
         </div>
 
         <!-- Lời đón tiếp kết thiệp -->
@@ -903,6 +909,60 @@
       ✦ Hoàng Dương &bull; Quốc Dũng ✦
     </footer>
   </main>
+
+  <!-- Nhạc nền du dương tự động phát ngầm (Không hiện nút bấm) -->
+  <audio id="bg-music" src="music.m4a" preload="auto" loop></audio>
+  <script>
+    (function() {
+      const bgAudio = document.getElementById('bg-music');
+      if (bgAudio) {
+        bgAudio.volume = 0.4;
+      }
+
+      let audioStarted = false;
+
+      function startAudio() {
+        if (audioStarted) return;
+        if (bgAudio) {
+          const playPromise = bgAudio.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              audioStarted = true;
+              removeListeners();
+            }).catch(() => {});
+          }
+        }
+      }
+
+      function onUserGesture() {
+        startAudio();
+      }
+
+      const gestureEvents = ['click', 'touchstart', 'touchend', 'pointerdown', 'keydown'];
+
+      function addListeners() {
+        gestureEvents.forEach(evt => {
+          document.addEventListener(evt, onUserGesture, { passive: true, once: true });
+          window.addEventListener(evt, onUserGesture, { passive: true, once: true });
+        });
+      }
+
+      function removeListeners() {
+        gestureEvents.forEach(evt => {
+          document.removeEventListener(evt, onUserGesture);
+          window.removeEventListener(evt, onUserGesture);
+        });
+      }
+
+      startAudio();
+      addListeners();
+
+      document.addEventListener('DOMContentLoaded', () => {
+        startAudio();
+        addListeners();
+      });
+    })();
+  </script>
 
   <!-- JavaScript Animation -->
   <script>
@@ -1003,80 +1063,14 @@
         animId = requestAnimationFrame(frame);
       }
 
-      // Tự chạy ngay khi load trang
       runAnimation();
 
-      // Bấm vào bất kỳ đâu trên bức tranh để xem lại nét vẽ
       artContainer.addEventListener('click', () => {
         if (!heroSection.classList.contains('docked')) return;
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setTimeout(runAnimation, 400);
       });
     });
-  </script>
-
-
-  
-
-
-  <!-- Nhạc nền du dương tự động phát ngầm (Không hiện nút bấm) -->
-  <audio id="bg-music" src="music.m4a" preload="auto" loop></audio>
-  <script>
-    (function() {
-      const bgAudio = document.getElementById('bg-music');
-      if (bgAudio) {
-        bgAudio.volume = 0.4; // Âm lượng êm dịu, du dương
-      }
-
-      let audioStarted = false;
-
-      function startAudio() {
-        if (audioStarted) return;
-        
-        // 1. Thử phát file nhạc acoustic piano chất lượng cao
-        if (bgAudio) {
-          const playPromise = bgAudio.play();
-          if (playPromise !== undefined) {
-            playPromise.then(() => {
-              audioStarted = true;
-              removeListeners();
-            }).catch(() => {
-              // Nếu trình duyệt chặn do chính sách Autoplay, chờ chạm màn hình
-            });
-          }
-        }
-      }
-
-      function onUserGesture() {
-        startAudio();
-      }
-
-      const gestureEvents = ['click', 'touchstart', 'touchend', 'pointerdown', 'keydown'];
-
-      function addListeners() {
-        gestureEvents.forEach(evt => {
-          document.addEventListener(evt, onUserGesture, { passive: true, once: true });
-          window.addEventListener(evt, onUserGesture, { passive: true, once: true });
-        });
-      }
-
-      function removeListeners() {
-        gestureEvents.forEach(evt => {
-          document.removeEventListener(evt, onUserGesture);
-          window.removeEventListener(evt, onUserGesture);
-        });
-      }
-
-      // 1. Thử phát ngay khi load
-      startAudio();
-      addListeners();
-
-      // Đảm bảo khi bấm vào bất kỳ đâu trên tranh hay màn hình đều mở nhạc
-      document.addEventListener('DOMContentLoaded', () => {
-        startAudio();
-        addListeners();
-      });
-    })();
   </script>
 
 </body>
