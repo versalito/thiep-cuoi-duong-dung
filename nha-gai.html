@@ -1008,106 +1008,67 @@
   </script>
 
 
+  
+
+
   <!-- Nhạc nền du dương tự động phát ngầm (Không hiện nút bấm) -->
+  <audio id="bg-music" src="music.m4a" preload="auto" loop></audio>
   <script>
+    (function() {
+      const bgAudio = document.getElementById('bg-music');
+      if (bgAudio) {
+        bgAudio.volume = 0.4; // Âm lượng êm dịu, du dương
+      }
 
-// Web Audio API Background Music Synthesizer (Gentle, Romantic, Acoustic Piano / Harp timbre)
-let audioCtx = null;
-let isPlaying = false;
-let melodyInterval = null;
+      let audioStarted = false;
 
-function initAudio() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
-}
+      function startAudio() {
+        if (audioStarted) return;
+        
+        // 1. Thử phát file nhạc acoustic piano chất lượng cao
+        if (bgAudio) {
+          const playPromise = bgAudio.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              audioStarted = true;
+              removeListeners();
+            }).catch(() => {
+              // Nếu trình duyệt chặn do chính sách Autoplay, chờ chạm màn hình
+            });
+          }
+        }
+      }
 
-// Gentle acoustic harp / piano note synthesis
-function playNote(freq, startTime, duration = 2.4, gainLevel = 0.07) {
-  if (!audioCtx) return;
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-  const filter = audioCtx.createBiquadFilter();
+      function onUserGesture() {
+        startAudio();
+      }
 
-  // Warm soft triangle wave
-  osc.type = 'triangle';
-  osc.frequency.setValueAtTime(freq, startTime);
+      const gestureEvents = ['click', 'touchstart', 'touchend', 'pointerdown', 'keydown'];
 
-  // Soft lowpass filter to create warm acoustic piano/harp feel
-  filter.type = 'lowpass';
-  filter.frequency.setValueAtTime(1400, startTime);
-  filter.Q.setValueAtTime(1, startTime);
+      function addListeners() {
+        gestureEvents.forEach(evt => {
+          document.addEventListener(evt, onUserGesture, { passive: true, once: true });
+          window.addEventListener(evt, onUserGesture, { passive: true, once: true });
+        });
+      }
 
-  // Envelope: soft gentle attack, long musical decay
-  gain.gain.setValueAtTime(0, startTime);
-  gain.gain.linearRampToValueAtTime(gainLevel, startTime + 0.08);
-  gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+      function removeListeners() {
+        gestureEvents.forEach(evt => {
+          document.removeEventListener(evt, onUserGesture);
+          window.removeEventListener(evt, onUserGesture);
+        });
+      }
 
-  osc.connect(filter);
-  filter.connect(gain);
-  gain.connect(audioCtx.destination);
+      // 1. Thử phát ngay khi load
+      startAudio();
+      addListeners();
 
-  osc.start(startTime);
-  osc.stop(startTime + duration);
-}
-
-// Romantic acoustic wedding arpeggios (Canon in D / Wedding ballad in C Major)
-const chordProgression = [
-  [261.63, 329.63, 392.00, 523.25], // C - E - G - C
-  [196.00, 246.94, 293.66, 392.00], // G - B - D - G
-  [220.00, 261.63, 329.63, 440.00], // A - C - E - A
-  [164.81, 196.00, 246.94, 329.63], // E - G - B - E
-  [174.61, 220.00, 261.63, 349.23], // F - A - C - F
-  [130.81, 164.81, 196.00, 261.63], // C - E - G - C
-  [174.61, 220.00, 261.63, 349.23], // F - A - C - F
-  [196.00, 246.94, 293.66, 392.00]  // G - B - D - G
-];
-
-function startBackgroundMusic() {
-  if (isPlaying) return;
-  initAudio();
-  isPlaying = true;
-
-  let chordIndex = 0;
-  function playChord() {
-    if (!audioCtx || audioCtx.state !== 'running') return;
-    const now = audioCtx.currentTime;
-    const notes = chordProgression[chordIndex % chordProgression.length];
-
-    // Arpeggiate notes gently like an acoustic guitar / harp
-    notes.forEach((freq, idx) => {
-      playNote(freq, now + idx * 0.28, 2.5, 0.06);
-    });
-
-    chordIndex++;
-  }
-
-  playChord();
-  melodyInterval = setInterval(playChord, 2200);
-}
-
-// Autoplay & User Interaction Handling:
-// 1. Try immediate autoplay on page load
-// 2. If blocked by browser policy, start instantly on very first user interaction anywhere
-function enableAutoMusic() {
-  startBackgroundMusic();
-  const unlockEvents = ['click', 'touchstart', 'scroll', 'keydown'];
-  function onFirstInteraction() {
-    startBackgroundMusic();
-    unlockEvents.forEach(evt => window.removeEventListener(evt, onFirstInteraction));
-  }
-  unlockEvents.forEach(evt => window.addEventListener(evt, onFirstInteraction, { passive: true }));
-}
-
-    // Kích hoạt ngay khi mở trang
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      enableAutoMusic();
-    } else {
-      document.addEventListener('DOMContentLoaded', enableAutoMusic);
-    }
+      // Đảm bảo khi bấm vào bất kỳ đâu trên tranh hay màn hình đều mở nhạc
+      document.addEventListener('DOMContentLoaded', () => {
+        startAudio();
+        addListeners();
+      });
+    })();
   </script>
 
 </body>
